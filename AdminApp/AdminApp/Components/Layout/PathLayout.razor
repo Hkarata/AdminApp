@@ -1,0 +1,62 @@
+﻿@inherits LayoutComponentBase
+@layout MainLayout
+@page "/learning-paths/learning-path/{Id}"
+
+<PageTitle>License Grade @Grade</PageTitle>
+<FluentCard Style="padding:8px 8px">
+    <FluentBreadcrumb Style="font-family:Bahnschrift;margin-top:10px;color:dodgerblue">
+        <FluentBreadcrumbItem Style="font-family:Bahnschrift;font-size:20px;color:dodgerblue" Href="/learning-paths">
+            Learning Paths
+            <FluentIcon Value="@(new Icons.Regular.Size20.BookOpenGlobe())" Color="@Color.Accent" Slot="start" />
+        </FluentBreadcrumbItem>
+        <FluentBreadcrumbItem Style="font-family:Bahnschrift;font-size:20px">
+            License Grade @Grade
+        </FluentBreadcrumbItem>
+    </FluentBreadcrumb>
+</FluentCard>
+<br/>
+<p style="font-family:Bahnschrift;">
+    Theoretical training for drivers is paramount as it imparts crucial knowledge on road safety principles, traffic rules, and risk management. This foundation enhances responsible driving behavior, reducing accidents and promoting safer roads.
+</p>
+
+<FluentStack Orientation="Orientation.Horizontal" Width="100%">
+        <PathMenu />
+    <FluentBodyContent>
+        <div style="margin: 10px 10px 10px 10px;">
+            @Body
+        </div>
+    </FluentBodyContent>
+</FluentStack>
+
+@code {
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    public string Grade { get; set; } = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        switch (Id)
+        {
+            case "1":
+                Grade = "A";
+                break;
+            case "2":
+                Grade = "B";
+                break;
+            case "3":
+                Grade = "C";
+                break;
+            case "4":
+                Grade = "D";
+                break;
+            case "5":
+                Grade = "E";
+                break;
+            default:
+                Grade = "A";
+                break;
+        }
+    }
+
+}

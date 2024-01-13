@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AdminApp.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+<FluentNavMenu Collapse="false">
+    <FluentNavLink Icon="@(new Icons.Regular.Size20.Person())" Href="Account/Manage" Match="NavLinkMatch.All">Profile</FluentNavLink>
+    <FluentNavLink Icon="@(new Icons.Regular.Size20.Mail())" Href="Account/Manage/Email">Email</FluentNavLink>
+    <FluentNavLink Icon="@(new Icons.Regular.Size20.Password())" Href="Account/Manage/ChangePassword">Password</FluentNavLink>
+    @if (hasExternalLogins)
+    {
+        <FluentNavLink Href="Account/Manage/ExternalLogins">External logins</FluentNavLink>
+    }
+    <FluentNavLink Icon="@(new Icons.Regular.Size20.VirtualNetworkToolbox())" Href="Account/Manage/TwoFactorAuthentication">Two-factor authentication</FluentNavLink>
+    <FluentNavLink Icon="@(new Icons.Regular.Size20.DatabasePerson())" Href="Account/Manage/PersonalData">Personal data</FluentNavLink>
+
+</FluentNavMenu>
+
+
+@code {
+    private bool hasExternalLogins;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    }
+}

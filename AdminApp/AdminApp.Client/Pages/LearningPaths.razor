@@ -1,0 +1,65 @@
+﻿@page "/learning-paths"
+
+@rendermode InteractiveAuto
+
+@inject NavigationManager NavManager
+
+<PageTitle>Learning Paths</PageTitle>
+
+<h3>Learning Paths</h3>
+
+<FluentGrid>
+    <FluentGridItem xs="8" sm="4">
+        <FluentCard @onclick="(() => GoToLearnPath(1))" Style="font-family:Bahnschrift;cursor:pointer">
+            <img src="https://th.bing.com/th/id/OIP.6UNpvFqeeIn3JfnNWH2ofwAAAA?rs=1&pid=ImgDetMain" width="100%"/>
+            <p style="font-family:Bahnschrift;font-size:18px">License Grade A</p>
+            <p style="font-family:Bahnschrift;font-size:16px;text-align:left;font-weight:200">
+                Obtain the freedom of the road for motorcycles with Grade A, showcasing your skills and responsibility in navigating two-wheeled adventures with confidence and expertise.
+            </p>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="8" sm="4">
+        <FluentCard @onclick="(() => GoToLearnPath(2))" Style="font-family:Bahnschrift;cursor:pointer">
+            <img src="https://purepng.com/public/uploads/large/purepng.com-mercedes-benz-back-view-white-carcarvehicletransportmercedes-benz-961524661913ltjjn.png" width="100%" />
+            <p style="font-family:Bahnschrift;font-size:18px">License Grade B</p>
+            <p style="font-family:Bahnschrift;font-size:16px;text-align:left;font-weight:200">
+                Unlock the keys to personal vehicle exploration with Grade B, granting you the privilege to drive private cars safely and efficiently, ensuring a smooth and enjoyable journey.
+            </p>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="8" sm="4">
+        <FluentCard @onclick="(() => GoToLearnPath(3))" Style="font-family:Bahnschrift;cursor:pointer">
+            <img src="https://th.bing.com/th/id/R.1af8f0f6ec6374f926ce5d1c582fdcc5?rik=UPn1cqEEluOMkQ&pid=ImgRaw&r=0" width="100%" />
+            <p style="font-family:Bahnschrift;font-size:18px">License Grade C</p>
+            <p style="font-family:Bahnschrift;font-size:16px;text-align:left;font-weight:200">
+                Embrace the responsibility of transporting passengers as a skilled bus driver with Grade C, ensuring the safety and comfort of those on board while navigating urban and rural routes.
+            </p>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="8" sm="4">
+        <FluentCard @onclick="(() => GoToLearnPath(4))" Style="font-family:Bahnschrift;cursor:pointer">
+            <img src="https://th.bing.com/th/id/R.bc8cb54861cfa57b4280ca5706fef018?rik=ELjmZaI%2f%2bdC6yg&riu=http%3a%2f%2fpluspng.com%2fimg-png%2florry-png-hd-cargo-truck-free-png-image-png-image-600.png&ehk=Qs4%2fNYzU0O8Y63qvTknirdsTXvjjMmIf0DTHyAlHdPI%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" width="100%"/>
+            <p style="font-family:Bahnschrift;font-size:18px">License Grade D</p>
+            <p style="font-family:Bahnschrift;font-size:16px;text-align:left;font-weight:200">
+                Master the art of handling heavy-duty vehicles with Grade D, earning the right to operate lorries and trucks efficiently, contributing to the smooth flow of goods and services.
+            </p>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="8" sm="4">
+        <FluentCard @onclick="(() => GoToLearnPath(5))" Style="font-family:Bahnschrift;cursor:pointer">
+            <img src="https://th.bing.com/th/id/R.4cfbce5cca5f603b9f0b26475f967ca6?rik=%2bEeUsJg9JqVbVw&pid=ImgRaw&r=0" width="100%"/>
+            <p style="font-family:Bahnschrift;font-size:18px">License Grade E</p>
+            <p style="font-family:Bahnschrift;font-size:16px;text-align:left;font-weight:200">
+                Command tractors and agricultural machinery with Grade E, showcasing your proficiency in managing farming equipment, contributing to the productivity of the agricultural sector.
+            </p>
+        </FluentCard>
+    </FluentGridItem>
+</FluentGrid>
+
+
+@code {
+    private void GoToLearnPath(int Id)
+    {
+        NavManager.NavigateTo($"/learning-paths/learning-path/{Id}");
+    }
+}

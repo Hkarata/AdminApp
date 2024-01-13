@@ -1,0 +1,11 @@
+﻿@page "/search/trainee/{TraineeId}"
+<h3>Trainee</h3>
+<PageTitle>Trainee</PageTitle>
+
+<p>TraineeId: @TraineeId</p>
+
+@code {
+
+    [Parameter]
+    public string TraineeId { get; set; } = string.Empty;
+}

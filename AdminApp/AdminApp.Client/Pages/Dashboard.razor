@@ -1,0 +1,56 @@
+﻿@page "/dashboard"
+
+@rendermode InteractiveAuto
+
+@inject NavigationManager NavManager
+
+<PageTitle>Dashboard</PageTitle>
+
+<h4 style="font-weight:400;">Dashboard</h4>
+
+
+<FluentStack Orientation="Orientation.Horizontal">
+    <FluentCard>
+        <p style="font-size:18px;font-weight:600;color:dodgerblue;">Summary</p>
+        <FluentStack Orientation="Orientation.Vertical">
+            <FluentCard Style="padding:10px 8px;display:flex;flex-direction:row;justify-content:space-between;">
+                Learning Paths
+                <FluentBadge OnClick="GoToLearningPaths" Style="font-size:16px;font-family:Bahnschrift;" Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="#ffd800;" Color="#000">5</FluentBadge>
+            </FluentCard>
+            <FluentCard Style="padding:10px 8px;display:flex;flex-direction:row;justify-content:space-between;">
+                Driving Schools
+                <FluentBadge OnClick="GoToDrivingSchools" Style="font-size:16px;font-family:Bahnschrift;" Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="#ffd800;" Color="#000">15</FluentBadge>
+            </FluentCard>
+            <FluentCard Style="padding:10px 8px;display:flex;flex-direction:row;justify-content:space-between;">
+                Trainees
+                <FluentBadge OnClick="GoToTrainees" Style="font-size:16px;font-family:Bahnschrift;" Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="#ffd800;" Color="#000">198,295</FluentBadge>
+            </FluentCard>
+        </FluentStack>
+    </FluentCard>
+    <FluentCard>
+
+    </FluentCard>
+    <FluentCard>
+
+    </FluentCard>
+</FluentStack>
+
+
+@code {
+
+    private void GoToDrivingSchools()
+    {
+        NavManager.NavigateTo("/driving-schools");
+    }
+
+    private void GoToTrainees()
+    {
+        NavManager.NavigateTo("/trainees");
+    }
+
+    private void GoToLearningPaths()
+    {
+        NavManager.NavigateTo("/learning-paths");
+    }
+
+}

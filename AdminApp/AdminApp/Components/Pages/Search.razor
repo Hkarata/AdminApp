@@ -1,0 +1,127 @@
+﻿@page "/search"
+
+@rendermode InteractiveAuto
+
+@inject NavigationManager NavManager        
+
+<p style="font-family:Bahnschrift;font-size:18px">Search</p>
+
+<FluentSearch Placeholder="Search Trainee" Appearance="FluentInputAppearance.Outline" @onkeyup="ClearItems" Autofocus="true" @bind-Value="Name" @bind-Value:after="HandleClear"  @oninput="HandleSearch" style="width: 100%;font-family:Bahnschrift;"></FluentSearch>
+
+<table >
+<thead>
+        <tr id="head-row">
+            <th>Trainee ID</th>
+            <th>Trainee Name</th>
+            <th>Driving School</th>
+            <th>Learning Path</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (filtered != null)
+        {
+            foreach (var trainee in filtered)
+            {
+                <tr @onclick="(() => GoToTrainee(trainee.TraineeId))">
+                    <td>@trainee.TraineeId</td>
+                    <td>@trainee.TraineeName</td>
+                    <td>@trainee.DrivingSchool</td>
+                    <td>@trainee.LearningPath</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    private void GoToTrainee(string traineeId)
+    {
+        NavManager.NavigateTo($"/search/trainee/{traineeId}");
+    }
+    private IQueryable<Trainee>? trainees;
+
+    private string Name { get; set; } = string.Empty;
+
+    private IQueryable<Trainee>? filtered;
+
+    private void HandleSearch(ChangeEventArgs args)
+    {
+        if (args.Value is string value)
+        {
+            Name = value;
+            filtered = trainees?.Where(trainee => trainee.TraineeName.Contains(Name, StringComparison.CurrentCultureIgnoreCase));
+        }
+    }
+
+    private void HandleClear()
+    {
+        if (string.IsNullOrWhiteSpace(Name))
+        {
+            Name = string.Empty;
+            filtered = null;
+        }
+        if (string.IsNullOrEmpty(Name))
+        {
+            filtered = null;
+        }
+    }
+
+    private void ClearItems()
+    {
+        if (string.IsNullOrEmpty(Name))
+        {
+            filtered = null;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        trainees = GenerateDummyData(100).AsQueryable();
+    }
+
+    private sealed class Trainee
+    {
+        public string TraineeId { get; set; } = string.Empty;
+        public string TraineeName { get; set; } = string.Empty;
+        public string TraineeEmail { get; set; } = string.Empty;
+        public string DrivingSchool { get; set; } = string.Empty;
+        public string LearningPath { get; set; } = string.Empty;
+        public string IssueNumber { get; set; } = string.Empty;
+    }
+
+    static List<Trainee> GenerateDummyData(int count)
+    {
+        List<Trainee> dummyData = new List<Trainee>();
+
+        for (int i = 1; i <= count; i++)
+        {
+            Trainee trainee = new Trainee
+                {
+                    TraineeId = $"TRN-{i}",
+                    TraineeName = $"John Doe {i}",
+                    DrivingSchool = GetRandomDrivingSchool(),
+                    LearningPath = GetRandomLearningPath(),
+                    IssueNumber = $"DCTTS-{i}"
+                };
+
+            dummyData.Add(trainee);
+        }
+
+        return dummyData;
+    }
+
+    static string GetRandomDrivingSchool()
+    {
+        string[] drivingSchools = { "School A", "School B", "School C", "School D", "School E" };
+        Random random = new Random();
+        return drivingSchools[random.Next(drivingSchools.Length)];
+    }
+
+    static string GetRandomLearningPath()
+    {
+        string[] learningPaths = { "License grade A", "License grade B", "License grade C", "License grade D", "License grade E" };
+        Random random = new Random();
+        return learningPaths[random.Next(learningPaths.Length)];
+    }
+
+}

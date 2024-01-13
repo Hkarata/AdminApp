@@ -1,0 +1,55 @@
+﻿@* To get access to all Fluent UI System icons, install the Microsoft.FluentUI.AspNetCore.Components.Icon package *@
+@* See all the different ways on how to use icons at https://www.fluentui-blazor.net/Icon *@
+@rendermode InteractiveAuto
+
+@implements IDisposable
+
+@inject NavigationManager NavigationManager
+
+<nav>
+    <FluentNavMenu Width="250" Collapsible="true" Title="Custom navigation menu">
+        <FluentNavLink Href="/dashboard" Match="NavLinkMatch.All" Icon="@Icon.FromImageUrl("/images/home.svg")" IconColor="Color.Fill">Dashboard</FluentNavLink>
+        <FluentNavLink Href="/search" Icon="@(new Icons.Regular.Size20.Search())" IconColor="Color.Neutral">Search</FluentNavLink>
+        <FluentNavLink Href="learning-paths" Icon="@(new Icons.Regular.Size20.BookOpenGlobe())" IconColor="Color.Neutral">Learning Paths</FluentNavLink>
+        <FluentNavLink Href="driving-schools" Icon="@(new Icons.Regular.Size20.BuildingRetailShield())" IconColor="Color.Neutral">Driving Schools</FluentNavLink>
+        <FluentNavLink Href="trainees" Icon="@(new Icons.Regular.Size20.PeopleCommunity())" IconColor="Color.Neutral">Trainees</FluentNavLink>
+        <FluentNavLink Href="auth" Icon="@Icon.FromImageUrl("/images/authrequired.svg")" IconColor="Color.Neutral">Auth Required</FluentNavLink>
+        <AuthorizeView>
+            <Authorized>
+                <FluentNavLink Href="Account/Manage">@context.User.Identity?.Name</FluentNavLink>
+                <form action="Account/Logout" method="post">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                    <FluentButton Type="ButtonType.Submit" Style="width: 100%;">Logout</FluentButton>
+                </form>
+            </Authorized>
+            <NotAuthorized>
+                <FluentNavLink Href="Account/Register">Register</FluentNavLink>
+                <FluentNavLink Href="Account/Login">Login</FluentNavLink>
+            </NotAuthorized>
+        </AuthorizeView>
+    </FluentNavMenu>
+</nav>
+
+
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
+

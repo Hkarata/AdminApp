@@ -1,0 +1,26 @@
+﻿@page "/learning-paths/learning-path/courses/add-course"
+
+
+<p style="font-family:Bahnschrift;font-size:18px;">Add-Course</p>
+
+<FluentTabs Orientation="Orientation.Vertical">
+    <FluentTab>
+        <Header>
+            <FluentIcon Value="@(new Icons.Regular.Size20.LeafTwo())" Color="@Color.Success" />
+            Reader Mode
+        </Header>
+        <Content>
+            <textarea id="editable"></textarea>
+        </Content>
+    </FluentTab>
+    <FluentTab>
+        <Header>
+            <FluentIcon Value="@(new Icons.Regular.Size20.Video())" Color="@Color.Success" />
+            Video Mode
+        </Header>
+    </FluentTab>
+</FluentTabs>
+
+@code {
+
+}

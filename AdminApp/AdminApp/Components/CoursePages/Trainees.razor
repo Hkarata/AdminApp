@@ -1,0 +1,103 @@
+﻿@page "/learning-paths/learning-path/courses/trainee"
+@rendermode InteractiveAuto
+
+@inject NavigationManager NavManager
+
+<h4 style="font-weight:400;">Trainees</h4>
+
+
+
+<FluentDataGrid TGridItem="Trainee" ResizableColumns="true" Items="@trainees" GridTemplateColumns="1fr 1fr 1fr 1fr 1fr" Pagination="@pagination">
+    <PropertyColumn Title="Trainee ID" Property="@(c => c!.TraineeId)" Sortable="true" Align=Align.Start/>
+    <PropertyColumn Title="Trainee Name" Tooltip="true" Property="@(c => c!.TraineeName)" Sortable="true" Align=Align.Center>
+        <ColumnOptions>
+            <div class="search-box">
+                <FluentSearch @bind-Value="@Name" @bind-Value:after="HandleClear" @oninput="HandleSearch" Placeholder="Search Trainee" Appearance="FluentInputAppearance.Outline" Autofocus="true"/>
+            </div>
+        </ColumnOptions>
+    </PropertyColumn>
+    <PropertyColumn Title="Driving School" Property="@(c => c!.DrivingSchool)" Sortable="true" Align=Align.Center/>
+<PropertyColumn Title="Learning Path" Property="@(c => c!.LearningPath)" Sortable="true" Align=Align.Center/>
+<PropertyColumn Title="Issue Number" Property="@(c => c!.IssueNumber)" Sortable="true" Align=Align.Center/>
+</FluentDataGrid>
+
+<FluentPaginator State="@pagination" />
+
+
+@code {
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+
+    private string Name = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        trainees = GenerateDummyData(100).AsQueryable();
+    }
+
+    private IQueryable<Trainee>? trainees;
+
+    private void HandleSearch(ChangeEventArgs args)
+    {
+        if (args.Value is string value)
+        {
+            Name = value;
+            trainees = trainees?.Where(trainee => trainee.TraineeName.Contains(Name, StringComparison.CurrentCultureIgnoreCase));
+        }
+    }
+
+    private void HandleClear()
+    {
+        if (string.IsNullOrWhiteSpace(Name))
+        {
+            Name = string.Empty;
+        }
+    }
+
+    private sealed class Trainee
+    {
+        public string TraineeId { get; set; } = string.Empty;
+        public string TraineeName { get; set; } = string.Empty;
+        public string TraineeEmail { get; set; } = string.Empty;
+        public string DrivingSchool { get; set; } = string.Empty;
+        public string LearningPath { get; set; } = string.Empty;
+        public string IssueNumber { get; set; } = string.Empty;
+    }
+
+    static List<Trainee> GenerateDummyData(int count)
+    {
+        List<Trainee> dummyData = new List<Trainee>();
+
+        for (int i = 1; i <= count; i++)
+        {
+            Trainee trainee = new Trainee
+                {
+                    TraineeId = $"TRN-{i}",
+                    TraineeName = $"John Doe {i}",
+                    DrivingSchool = GetRandomDrivingSchool(),
+                    LearningPath = GetRandomLearningPath(),
+                    IssueNumber = $"DCTTS-{i}"
+                };
+
+            dummyData.Add(trainee);
+        }
+
+        return dummyData;
+    }
+
+    static string GetRandomDrivingSchool()
+    {
+        string[] drivingSchools = { "School A", "School B", "School C", "School D", "School E" };
+        Random random = new Random();
+        return drivingSchools[random.Next(drivingSchools.Length)];
+    }
+
+    static string GetRandomLearningPath()
+    {
+        string[] learningPaths = { "License grade A", "License grade B", "License grade C", "License grade D", "License grade E" };
+        Random random = new Random();
+        return learningPaths[random.Next(learningPaths.Length)];
+    }
+
+}
+
